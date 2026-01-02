@@ -8,7 +8,6 @@
       :root {
         --bg: #0b1020;
         --panel: rgba(255, 255, 255, 0.06);
-        --panel2: rgba(255, 255, 255, 0.09);
         --text: #e8eefc;
         --muted: rgba(232, 238, 252, 0.72);
         --accent: #7c5cff;
@@ -30,12 +29,13 @@
           radial-gradient(1000px 700px at 50% 90%, rgba(255, 77, 109, 0.12), transparent 55%),
           var(--bg);
         min-height: 100vh;
-        padding: 24px;
+        min-height: 100dvh;
+        padding: 12px;
         display: grid;
         place-items: center;
       }
       .app {
-        width: min(1100px, 100%);
+        width: min(900px, 100%);
         border-radius: var(--radius);
         background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
         border: 1px solid rgba(255,255,255,0.10);
@@ -46,34 +46,23 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        padding: 18px 18px 10px 18px;
-      }
-      .title {
-        display: flex;
-        align-items: baseline;
         gap: 10px;
+        padding: 14px 14px 10px 14px;
+        flex-wrap: wrap;
       }
       .title h1 {
         margin: 0;
-        font-size: 18px;
-        letter-spacing: .4px;
+        font-size: 16px;
+        letter-spacing: .3px;
       }
-      .badge {
-        font-size: 12px;
-        color: var(--muted);
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.08);
-        font-family: var(--mono);
+      @media (max-width: 500px) {
+        .title h1 { font-size: 14px; }
       }
       .toolbar {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         flex-wrap: wrap;
-        justify-content: flex-end;
       }
       .btn {
         appearance: none;
@@ -81,14 +70,15 @@
         background: rgba(255,255,255,0.06);
         color: var(--text);
         border-radius: 999px;
-        padding: 9px 12px;
-        font-size: 13px;
+        padding: 10px 14px;
+        font-size: 14px;
         cursor: pointer;
         transition: transform .06s ease, background .15s ease, border-color .15s ease;
         white-space: nowrap;
+        touch-action: manipulation;
       }
       .btn:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.16); }
-      .btn:active { transform: translateY(1px); }
+      .btn:active { transform: scale(0.97); }
       .btn.primary {
         background: linear-gradient(135deg, rgba(124,92,255,0.90), rgba(124,92,255,0.55));
         border-color: rgba(124,92,255,0.60);
@@ -97,13 +87,17 @@
         background: linear-gradient(135deg, rgba(255,77,109,0.82), rgba(255,77,109,0.45));
         border-color: rgba(255,77,109,0.55);
       }
+      .btn.help {
+        background: linear-gradient(135deg, rgba(39,211,162,0.80), rgba(39,211,162,0.45));
+        border-color: rgba(39,211,162,0.55);
+      }
       .main {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        padding: 14px 18px 18px 18px;
+        gap: 12px;
+        padding: 10px 14px 14px 14px;
       }
-      @media (max-width: 980px) {
+      @media (max-width: 700px) {
         .main { grid-template-columns: 1fr; }
       }
       .panel {
@@ -111,11 +105,13 @@
         background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.08);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
       .panel h2 {
         margin: 0;
-        padding: 12px 12px 10px 12px;
-        font-size: 13px;
+        padding: 10px 12px;
+        font-size: 12px;
         color: var(--muted);
         letter-spacing: .4px;
         text-transform: uppercase;
@@ -123,87 +119,129 @@
       }
       textarea {
         width: 100%;
-        min-height: 320px;
+        min-height: 200px;
+        flex: 1;
         padding: 12px;
         border: 0;
-        border-top: 1px solid rgba(255,255,255,0.08);
         background: rgba(0,0,0,0.22);
         color: var(--text);
         outline: none;
-        resize: vertical;
-        font-size: 14px;
-        line-height: 1.45;
-        font-family: var(--mono);
+        resize: none;
+        font-size: 15px;
+        line-height: 1.5;
+        font-family: var(--sans);
+      }
+      @media (max-width: 700px) {
+        textarea { min-height: 150px; font-size: 16px; }
       }
       .panel .footer {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 10px 12px;
+        justify-content: flex-end;
+        padding: 8px 12px;
         background: rgba(255,255,255,0.04);
         border-top: 1px solid rgba(255,255,255,0.08);
         color: var(--muted);
         font-size: 12px;
       }
-      .opts {
-        padding: 12px 18px 18px 18px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-      @media (max-width: 980px) { .opts { grid-template-columns: 1fr; } }
-      .optCard {
-        border-radius: var(--radius);
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.08);
-        overflow: hidden;
-      }
-      .optCard h3 {
-        margin: 0;
-        padding: 12px 12px 10px 12px;
-        font-size: 13px;
-        color: var(--muted);
-        letter-spacing: .4px;
-        text-transform: uppercase;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-      }
-      .checks {
-        padding: 10px 12px 12px 12px;
-        display: grid;
-        gap: 10px;
-      }
-      label {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
-        cursor: pointer;
-      }
-      input[type="checkbox"] { margin-top: 2px; }
-      .desc { color: var(--muted); font-size: 12px; margin-top: 2px; }
       .mono { font-family: var(--mono); }
-      .status {
-        padding: 0 18px 18px 18px;
-        color: var(--muted);
-        font-size: 12px;
-      }
       .toast {
         position: fixed;
         left: 50%;
-        bottom: 18px;
+        bottom: 20px;
         transform: translateX(-50%);
-        background: rgba(0,0,0,0.55);
-        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(0,0,0,0.75);
+        border: 1px solid rgba(255,255,255,0.15);
         color: var(--text);
-        padding: 10px 12px;
+        padding: 12px 18px;
         border-radius: 999px;
         box-shadow: var(--shadow);
-        font-size: 13px;
+        font-size: 14px;
         opacity: 0;
         pointer-events: none;
-        transition: opacity .18s ease;
+        transition: opacity .2s ease;
+        z-index: 100;
       }
       .toast.show { opacity: 1; }
+
+      /* Modal */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .2s ease;
+        z-index: 200;
+      }
+      .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal {
+        background: linear-gradient(180deg, rgba(30,35,50,0.98), rgba(20,25,40,0.98));
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: var(--radius);
+        max-width: 500px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow);
+        transform: scale(0.95);
+        transition: transform .2s ease;
+      }
+      .modal-overlay.show .modal {
+        transform: scale(1);
+      }
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .modal-header h3 {
+        margin: 0;
+        font-size: 16px;
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+      }
+      .modal-close:hover { color: var(--text); }
+      .modal-body {
+        padding: 18px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .modal-body h4 {
+        color: var(--text);
+        margin: 16px 0 8px 0;
+        font-size: 14px;
+      }
+      .modal-body h4:first-child { margin-top: 0; }
+      .modal-body ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .modal-body li { margin: 4px 0; }
+      .modal-body code {
+        background: rgba(255,255,255,0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: var(--mono);
+        font-size: 12px;
+      }
     </style>
   </head>
   <body>
@@ -211,138 +249,87 @@
       <header>
         <div class="title">
           <h1>ChatGPT → Ανθρώπινο κείμενο</h1>
-          <div class="badge">local • no tracking</div>
         </div>
         <div class="toolbar">
-          <button id="pasteBtn" class="btn">Paste input</button>
+          <button id="pasteBtn" class="btn">Paste</button>
           <button id="cleanBtn" class="btn primary">Καθάρισε</button>
-          <button id="copyBtn" class="btn">Copy output</button>
-          <button id="swapBtn" class="btn">Swap</button>
+          <button id="copyBtn" class="btn">Copy</button>
           <button id="clearBtn" class="btn danger">Clear</button>
+          <button id="helpBtn" class="btn help">Help</button>
         </div>
       </header>
 
       <div class="main">
         <div class="panel">
-          <h2>Input (paste)</h2>
+          <h2>Input</h2>
           <textarea id="input" placeholder="Κάνε paste εδώ το κείμενο από ChatGPT…"></textarea>
           <div class="footer">
-            <div>Συντόμευση: <span class="mono">Ctrl/⌘ + Enter</span> = καθάρισμα</div>
-            <div id="inCount" class="mono">0 chars</div>
+            <div id="inCount" class="mono">0</div>
           </div>
         </div>
         <div class="panel">
-          <h2>Output (clean)</h2>
-          <textarea id="output" readonly placeholder="Το καθαρό κείμενο θα εμφανιστεί εδώ…"></textarea>
+          <h2>Output</h2>
+          <textarea id="output" readonly placeholder="Το καθαρό κείμενο εδώ…"></textarea>
           <div class="footer">
-            <div>Copy λειτουργεί καλύτερα από <span class="mono">localhost</span> (όπως εδώ)</div>
-            <div id="outCount" class="mono">0 chars</div>
+            <div id="outCount" class="mono">0</div>
           </div>
         </div>
       </div>
-
-      <div class="opts">
-        <div class="optCard">
-          <h3>Καθάρισμα μορφοποίησης</h3>
-          <div class="checks">
-            <label><input id="rmMarkdown" type="checkbox" checked />
-              <div>
-                <div>Αφαίρεση Markdown (<span class="mono">**bold**</span>, <span class="mono">`code`</span>, headings, links)</div>
-                <div class="desc">Κρατάει το κείμενο, αφαιρεί τα σύμβολα.</div>
-              </div>
-            </label>
-            <label><input id="rmBullets" type="checkbox" checked />
-              <div>
-                <div>Μετατροπή bullets/λιστών σε κανονικές προτάσεις</div>
-                <div class="desc">Βγάζει <span class="mono">-</span>, <span class="mono">--</span>, <span class="mono">•</span>, <span class="mono">1.</span> κ.λπ. και τα “ισιώνει”.</div>
-              </div>
-            </label>
-            <label><input id="flattenLines" type="checkbox" checked />
-              <div>
-                <div>Συγχώνευση “σπασμένων” γραμμών σε παραγράφους</div>
-                <div class="desc">Διατηρεί τα κενά (παραγράφους), αλλά ενώνει τις μικρές γραμμές.</div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="optCard">
-          <h3>ChatGPT-ισμός</h3>
-          <div class="checks">
-            <label><input id="rmOpeners" type="checkbox" checked />
-              <div>
-                <div>Αφαίρεση “intro” τύπου ChatGPT (π.χ. “Sure,”, “Of course,”)</div>
-                <div class="desc">Μόνο στην αρχή του κειμένου (συντηρητικά).</div>
-              </div>
-            </label>
-            <label><input id="rmAsAI" type="checkbox" checked />
-              <div>
-                <div>Αφαίρεση γραμμών τύπου “As an AI …”</div>
-                <div class="desc">Σβήνει προτάσεις/γραμμές που ξεκάθαρα είναι disclaimer.</div>
-              </div>
-            </label>
-            <label><input id="imNoApos" type="checkbox" checked />
-              <div>
-                <div>Μετατροπή <span class="mono">I'm / I’m</span> → <span class="mono">im</span> (ΜΟΝΟ αυτό)</div>
-                <div class="desc">Δεν πειράζει <span class="mono">don't</span> κ.λπ.</div>
-              </div>
-            </label>
-            <label><input id="normalizeQuotes" type="checkbox" checked />
-              <div>
-                <div>Ομαλοποίηση “έξυπνων” εισαγωγικών</div>
-                <div class="desc"><span class="mono">“ ”</span> → <span class="mono">"</span> και <span class="mono">’</span> → <span class="mono">'</span> (εκτός από το rule του I'm).</div>
-              </div>
-            </label>
-            <label><input id="rmDoubleQuotes" type="checkbox" checked />
-              <div>
-                <div>Αφαίρεση διπλών εισαγωγικών (<span class="mono">"</span>)</div>
-                <div class="desc">Π.χ. <span class="mono">"snap!"</span> → <span class="mono">snap!</span> (δεν πειράζει αποστρόφους σε <span class="mono">don't</span>).</div>
-              </div>
-            </label>
-            <label><input id="rmLongDashes" type="checkbox" checked />
-              <div>
-                <div>Αντικατάσταση <span class="mono">—</span>/<span class="mono">–</span> (και <span class="mono">--</span>) με κόμμα</div>
-                <div class="desc">Π.χ. <span class="mono">ones—Leo</span> → <span class="mono">ones, Leo</span>.</div>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="status" id="status"></div>
     </div>
 
     <div class="toast" id="toast">Copied</div>
 
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Τι κάνει αυτό το εργαλείο;</h3>
+          <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Μετατρέπει κείμενο από το ChatGPT σε πιο φυσικό, ανθρώπινο κείμενο.</p>
+          
+          <h4>Αφαιρεί αυτόματα:</h4>
+          <ul>
+            <li>Markdown: <code>**bold**</code>, <code>`code`</code>, headings, links</li>
+            <li>Bullets και λίστες: <code>-</code>, <code>•</code>, <code>1.</code></li>
+            <li>ChatGPT intros: "Sure,", "Of course,", "Certainly,"</li>
+            <li>AI disclaimers: "As an AI...", "I'm just an AI..."</li>
+            <li>Έξυπνα εισαγωγικά: <code>" "</code> → <code>"</code></li>
+            <li>Long dashes: <code>—</code>, <code>–</code> → κόμμα</li>
+            <li>AI σύμβολα: <code>»</code> <code>«</code> <code>→</code> <code>•</code> <code>✓</code> <code>★</code> κλπ</li>
+          </ul>
+
+          <h4>Πώς το χρησιμοποιείς:</h4>
+          <ul>
+            <li><strong>Paste</strong> - Επικόλληση από clipboard</li>
+            <li><strong>Καθάρισε</strong> - Εκτέλεση καθαρισμού</li>
+            <li><strong>Copy</strong> - Αντιγραφή αποτελέσματος</li>
+            <li><strong>Clear</strong> - Καθαρισμός όλων</li>
+          </ul>
+
+          <h4>Συντόμευση:</h4>
+          <p><code>Ctrl/⌘ + Enter</code> = Καθάρισε</p>
+        </div>
+      </div>
+    </div>
+
     <script>
       const inputEl = document.getElementById('input');
       const outputEl = document.getElementById('output');
-      const statusEl = document.getElementById('status');
       const toastEl = document.getElementById('toast');
       const inCount = document.getElementById('inCount');
       const outCount = document.getElementById('outCount');
-
-      const rmMarkdown = document.getElementById('rmMarkdown');
-      const rmBullets = document.getElementById('rmBullets');
-      const flattenLines = document.getElementById('flattenLines');
-      const rmOpeners = document.getElementById('rmOpeners');
-      const rmAsAI = document.getElementById('rmAsAI');
-      const imNoApos = document.getElementById('imNoApos');
-      const normalizeQuotes = document.getElementById('normalizeQuotes');
-      const rmDoubleQuotes = document.getElementById('rmDoubleQuotes');
-      const rmLongDashes = document.getElementById('rmLongDashes');
+      const modalOverlay = document.getElementById('modalOverlay');
 
       function showToast(msg) {
         toastEl.textContent = msg;
         toastEl.classList.add('show');
-        setTimeout(() => toastEl.classList.remove('show'), 900);
+        setTimeout(() => toastEl.classList.remove('show'), 1200);
       }
 
-      function count(s) { return (s || '').length; }
-
       function updateCounts() {
-        inCount.textContent = `${count(inputEl.value)} chars`;
-        outCount.textContent = `${count(outputEl.value)} chars`;
+        inCount.textContent = (inputEl.value || '').length;
+        outCount.textContent = (outputEl.value || '').length;
       }
 
       function normalizeNewlines(s) {
@@ -351,35 +338,28 @@
 
       function stripMarkdown(s) {
         s = s.replace(/```[\s\S]*?```/g, (m) => {
-          // Keep content, drop fences.
           return m.replace(/^```[^\n]*\n?/, '').replace(/```$/, '');
         });
-        // Links: [text](url) -> text
         s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1');
-        // Images: ![alt](url) -> alt
         s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '$1');
-        // Headings / blockquotes.
         s = s.replace(/^\s{0,3}#{1,6}\s+/gm, '');
         s = s.replace(/^\s{0,3}>\s?/gm, '');
-        // Bold/italic/strike.
         s = s.replace(/\*\*([^*]+)\*\*/g, '$1');
         s = s.replace(/\*([^*]+)\*/g, '$1');
         s = s.replace(/__([^_]+)__/g, '$1');
         s = s.replace(/_([^_]+)_/g, '$1');
         s = s.replace(/~~([^~]+)~~/g, '$1');
-        // Inline code.
         s = s.replace(/`([^`]+)`/g, '$1');
-        // Horizontal rules.
         s = s.replace(/^\s{0,3}([-*_])(\s*\1){2,}\s*$/gm, '');
         return s;
       }
 
       function normalizeSmartQuotes(s) {
         return s
-          .replaceAll('“', '"')
-          .replaceAll('”', '"')
-          .replaceAll('‘', "'")
-          .replaceAll('’', "'");
+          .replaceAll('"', '"')
+          .replaceAll('"', '"')
+          .replaceAll(''', "'")
+          .replaceAll(''', "'");
       }
 
       function removeDoubleQuotesOnly(s) {
@@ -387,21 +367,64 @@
       }
 
       function replaceLongDashes(s) {
-        // Replace em/en dashes and double-hyphen with a comma, keeping words readable.
         return String(s)
           .replace(/(\S)\s*(?:—|–|--)\s*(\S)/g, '$1, $2')
           .replace(/(?:—|–)/g, ' ');
       }
 
+      function removeAiSymbols(s) {
+        return String(s)
+          .replaceAll('»', '')
+          .replaceAll('«', '')
+          .replaceAll('→', '')
+          .replaceAll('←', '')
+          .replaceAll('↔', '')
+          .replaceAll('⇒', '')
+          .replaceAll('⇐', '')
+          .replaceAll('•', '')
+          .replaceAll('◦', '')
+          .replaceAll('▪', '')
+          .replaceAll('▸', '')
+          .replaceAll('▹', '')
+          .replaceAll('…', '...')
+          .replaceAll('✓', '')
+          .replaceAll('✔', '')
+          .replaceAll('✗', '')
+          .replaceAll('✘', '')
+          .replaceAll('☑', '')
+          .replaceAll('☐', '')
+          .replaceAll('★', '')
+          .replaceAll('☆', '')
+          .replaceAll('⭐', '')
+          .replaceAll('©', '')
+          .replaceAll('®', '')
+          .replaceAll('™', '')
+          .replaceAll('°', '')
+          .replaceAll('·', ' ')
+          .replaceAll('│', '')
+          .replaceAll('─', '')
+          .replaceAll('├', '')
+          .replaceAll('└', '')
+          .replaceAll('┌', '')
+          .replaceAll('┐', '')
+          .replaceAll('┘', '')
+          .replaceAll('×', 'x')
+          .replaceAll('÷', '/')
+          .replaceAll('±', '+/-')
+          .replaceAll('≈', '~')
+          .replaceAll('≠', '!=')
+          .replaceAll('≤', '<=')
+          .replaceAll('≥', '>=')
+          .replace(/  +/g, ' ');
+      }
+
       function applyImRule(s) {
-        // Replace only I'm / I’m (not don't, can't, etc).
         return s
-          .replace(/\bI[’']m\b/g, 'im')
-          .replace(/\bI[’']M\b/g, 'IM');
+          .replace(/\bI['']m\b/g, 'im')
+          .replace(/\bI['']M\b/g, 'IM');
       }
 
       function removeIntroOpeners(s) {
-        // Conservative: only at start of the whole text (first non-empty line).
         const lines = normalizeNewlines(s).split('\n');
         let i = 0;
         while (i < lines.length && lines[i].trim() === '') i++;
@@ -412,14 +435,14 @@
           /^of course[!,.\s-]/i,
           /^certainly[!,.\s-]/i,
           /^absolutely[!,.\s-]/i,
-          /^here(?:'|’)s[!,.\s-]/i,
+          /^here(?:'|')s[!,.\s-]/i,
           /^here is[!,.\s-]/i,
           /^okay[!,.\s-]/i,
           /^ok[!,.\s-]/i,
+          /^great[!,.\s-]/i,
         ];
         for (const p of patterns) {
           if (p.test(line)) {
-            // Drop just that line if it looks like a generic opener.
             lines.splice(i, 1);
             return lines.join('\n');
           }
@@ -434,8 +457,8 @@
           const t = raw.trim();
           if (!t) { out.push(raw); continue; }
           if (/^as an ai\b/i.test(t)) continue;
-          if (/^i(?:'|’)m (?:just )?an ai\b/i.test(t)) continue;
-          if (/^i (?:can(?:'|’)t|cannot)\b/i.test(t) && /as an ai|language model/i.test(t)) continue;
+          if (/^i(?:'|')m (?:just )?an ai\b/i.test(t)) continue;
+          if (/^i (?:can(?:'|')t|cannot)\b/i.test(t) && /as an ai|language model/i.test(t)) continue;
           out.push(raw);
         }
         return out.join('\n');
@@ -487,7 +510,6 @@
             bucket.push(stripBulletMarker(line));
             continue;
           }
-          // Continuation line for a bullet block: if we already have bullets and this line looks indented.
           if (bucket.length > 0 && /^\s{2,}/.test(line)) {
             bucket[bucket.length - 1] = (bucket[bucket.length - 1] + ' ' + trimmed).trim();
             continue;
@@ -506,7 +528,6 @@
 
         function flushPara() {
           if (para.length === 0) return;
-          // Join lines inside a paragraph, normalizing whitespace.
           const joined = para.join(' ')
             .replace(/\s+/g, ' ')
             .replace(/\s+([,.;:!?])/g, '$1')
@@ -526,17 +547,13 @@
         }
         flushPara();
 
-        // Collapse excessive blank lines.
         return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
       }
 
       function finalPolish(s) {
         s = normalizeNewlines(s);
-        // Remove trailing whitespace per line.
         s = s.replace(/[ \t]+$/gm, '');
-        // Collapse weird multiple spaces.
         s = s.replace(/[ \t]{2,}/g, ' ');
-        // Trim only the outer edges (keep paragraph breaks).
         s = s.replace(/^\n+/, '').replace(/\n+$/, '');
         return s;
       }
@@ -544,15 +561,16 @@
       function cleanText(input) {
         let s = normalizeNewlines(input || '');
 
-        if (normalizeQuotes.checked) s = normalizeSmartQuotes(s);
-        if (imNoApos.checked) s = applyImRule(s);
-        if (rmDoubleQuotes.checked) s = removeDoubleQuotesOnly(s);
-        if (rmLongDashes.checked) s = replaceLongDashes(s);
-        if (rmOpeners.checked) s = removeIntroOpeners(s);
-        if (rmAsAI.checked) s = removeAsAiLines(s);
-        if (rmMarkdown.checked) s = stripMarkdown(s);
-        if (rmBullets.checked) s = bulletsToParagraphs(s);
-        if (flattenLines.checked) s = flattenWrappedLines(s);
+        s = normalizeSmartQuotes(s);
+        s = applyImRule(s);
+        s = removeDoubleQuotesOnly(s);
+        s = replaceLongDashes(s);
+        s = removeAiSymbols(s);
+        s = removeIntroOpeners(s);
+        s = removeAsAiLines(s);
+        s = stripMarkdown(s);
+        s = bulletsToParagraphs(s);
+        s = flattenWrappedLines(s);
         s = finalPolish(s);
 
         return s;
@@ -563,22 +581,20 @@
         const cleaned = cleanText(raw);
         outputEl.value = cleaned;
         updateCounts();
-        statusEl.textContent = `OK: ${raw.length} → ${cleaned.length} chars`;
+        showToast('Καθαρίστηκε!');
       }
 
       async function copyOut() {
         const text = outputEl.value;
-        if (!text) { showToast('Nothing to copy'); return; }
+        if (!text) { showToast('Τίποτα για copy'); return; }
         try {
           await navigator.clipboard.writeText(text);
-          showToast('Copied');
+          showToast('Copied!');
         } catch {
-          // Fallback
           outputEl.focus();
           outputEl.select();
           document.execCommand('copy');
-          showToast('Copied');
-          inputEl.focus();
+          showToast('Copied!');
         }
       }
 
@@ -587,12 +603,19 @@
           const text = await navigator.clipboard.readText();
           inputEl.value = text;
           updateCounts();
-          inputEl.focus();
-          showToast('Pasted');
+          showToast('Pasted!');
         } catch {
           inputEl.focus();
-          showToast('Paste blocked');
+          showToast('Paste blocked - κάνε Ctrl+V');
         }
+      }
+
+      function openHelp() {
+        modalOverlay.classList.add('show');
+      }
+
+      function closeHelp() {
+        modalOverlay.classList.remove('show');
       }
 
       document.getElementById('cleanBtn').addEventListener('click', doClean);
@@ -601,21 +624,21 @@
       document.getElementById('clearBtn').addEventListener('click', () => {
         inputEl.value = '';
         outputEl.value = '';
-        statusEl.textContent = '';
         updateCounts();
         inputEl.focus();
+        showToast('Cleared!');
       });
-      document.getElementById('swapBtn').addEventListener('click', () => {
-        const a = inputEl.value;
-        inputEl.value = outputEl.value;
-        outputEl.value = a;
-        updateCounts();
+      document.getElementById('helpBtn').addEventListener('click', openHelp);
+      document.getElementById('modalClose').addEventListener('click', closeHelp);
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeHelp();
       });
 
       inputEl.addEventListener('input', updateCounts);
       outputEl.addEventListener('input', updateCounts);
       document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); doClean(); }
+        if (e.key === 'Escape') closeHelp();
       });
 
       updateCounts();
