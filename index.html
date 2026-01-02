@@ -252,8 +252,7 @@
         </div>
         <div class="toolbar">
           <button id="pasteBtn" class="btn">Paste</button>
-          <button id="cleanBtn" class="btn primary">Καθάρισε</button>
-          <button id="copyBtn" class="btn">Copy</button>
+          <button id="copyBtn" class="btn primary">Copy</button>
           <button id="clearBtn" class="btn danger">Clear</button>
           <button id="helpBtn" class="btn help">Help</button>
         </div>
@@ -302,13 +301,11 @@
           <h4>Πώς το χρησιμοποιείς:</h4>
           <ul>
             <li><strong>Paste</strong> - Επικόλληση από clipboard</li>
-            <li><strong>Καθάρισε</strong> - Εκτέλεση καθαρισμού</li>
             <li><strong>Copy</strong> - Αντιγραφή αποτελέσματος</li>
             <li><strong>Clear</strong> - Καθαρισμός όλων</li>
           </ul>
 
-          <h4>Συντόμευση:</h4>
-          <p><code>Ctrl/⌘ + Enter</code> = Καθάρισε</p>
+          <p><strong>Το καθάρισμα γίνεται αυτόματα!</strong></p>
         </div>
       </div>
     </div>
@@ -356,10 +353,10 @@
 
       function normalizeSmartQuotes(s) {
         return s
-          .replaceAll('"', '"')
-          .replaceAll('"', '"')
-          .replaceAll(''', "'")
-          .replaceAll(''', "'");
+          .replaceAll('\u201C', '"')
+          .replaceAll('\u201D', '"')
+          .replaceAll('\u2018', "'")
+          .replaceAll('\u2019', "'");
       }
 
       function removeDoubleQuotesOnly(s) {
@@ -420,8 +417,8 @@
 
       function applyImRule(s) {
         return s
-          .replace(/\bI['']m\b/g, 'im')
-          .replace(/\bI['']M\b/g, 'IM');
+          .replace(/\bI['\u2019]m\b/g, 'im')
+          .replace(/\bI['\u2019]M\b/g, 'IM');
       }
 
       function removeIntroOpeners(s) {
@@ -435,7 +432,7 @@
           /^of course[!,.\s-]/i,
           /^certainly[!,.\s-]/i,
           /^absolutely[!,.\s-]/i,
-          /^here(?:'|')s[!,.\s-]/i,
+          /^here(?:'|\u2019)s[!,.\s-]/i,
           /^here is[!,.\s-]/i,
           /^okay[!,.\s-]/i,
           /^ok[!,.\s-]/i,
@@ -457,8 +454,8 @@
           const t = raw.trim();
           if (!t) { out.push(raw); continue; }
           if (/^as an ai\b/i.test(t)) continue;
-          if (/^i(?:'|')m (?:just )?an ai\b/i.test(t)) continue;
-          if (/^i (?:can(?:'|')t|cannot)\b/i.test(t) && /as an ai|language model/i.test(t)) continue;
+          if (/^i(?:'|\u2019)m (?:just )?an ai\b/i.test(t)) continue;
+          if (/^i (?:can(?:'|\u2019)t|cannot)\b/i.test(t) && /as an ai|language model/i.test(t)) continue;
           out.push(raw);
         }
         return out.join('\n');
@@ -581,7 +578,6 @@
         const cleaned = cleanText(raw);
         outputEl.value = cleaned;
         updateCounts();
-        showToast('Καθαρίστηκε!');
       }
 
       async function copyOut() {
@@ -602,7 +598,7 @@
         try {
           const text = await navigator.clipboard.readText();
           inputEl.value = text;
-          updateCounts();
+          doClean();
           showToast('Pasted!');
         } catch {
           inputEl.focus();
@@ -618,7 +614,6 @@
         modalOverlay.classList.remove('show');
       }
 
-      document.getElementById('cleanBtn').addEventListener('click', doClean);
       document.getElementById('pasteBtn').addEventListener('click', pasteIn);
       document.getElementById('copyBtn').addEventListener('click', copyOut);
       document.getElementById('clearBtn').addEventListener('click', () => {
@@ -634,10 +629,12 @@
         if (e.target === modalOverlay) closeHelp();
       });
 
-      inputEl.addEventListener('input', updateCounts);
+      // Auto-clean on input
+      inputEl.addEventListener('input', () => {
+        doClean();
+      });
       outputEl.addEventListener('input', updateCounts);
       document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); doClean(); }
         if (e.key === 'Escape') closeHelp();
       });
 
@@ -646,3 +643,4 @@
     </script>
   </body>
 </html>
+
